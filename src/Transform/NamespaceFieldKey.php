@@ -34,6 +34,7 @@ class NamespaceFieldKey extends RecursiveTransform
      */
     public function transformValue($value)
     {
+        return $value;
         $namespace = 'field_';
         $groupName = $this->getBuilder()->getName();
 
