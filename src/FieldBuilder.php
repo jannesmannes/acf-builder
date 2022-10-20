@@ -5,6 +5,7 @@ namespace StoutLogic\AcfBuilder;
 /**
  * Builds configurations for an ACF Field
  * @method FieldBuilder addField(string $name, string $type, array $args = [])
+ * @method FieldBuilder addFields(FieldsBuilder|array $fields)
  * @method FieldBuilder addChoiceField(string $name, string $type, array $args = [])
  * @method FieldBuilder addText(string $name, array $args = [])
  * @method FieldBuilder addTextarea(string $name, array $args = [])
@@ -34,13 +35,17 @@ namespace StoutLogic\AcfBuilder;
  * @method FieldBuilder addTab(string $label, array $args = [])
  * @method FieldBuilder addRange(string $name, array $args = [])
  * @method FieldBuilder addMessage(string $label, string $message, array $args = [])
+ * @method FieldBuilder addRelationship(string $name, array $args = [])
+ * @method FieldBuilder addAccordion(string $name, array $args = [])
+ * @method TabBuilder endpoint()
+ * @method TabBuilder removeEndpoint()
  * @method GroupBuilder addGroup(string $name, array $args = [])
  * @method GroupBuilder endGroup()
  * @method RepeaterBuilder addRepeater(string $name, array $args = [])
- * @method Builder endRepeater()
+ * @method RepeaterBuilder endRepeater()
  * @method FlexibleContentBuilder addFlexibleContent(string $name, array $args = [])
  * @method FieldsBuilder addLayout(string|FieldsBuilder $layout, array $args = [])
- * @method LocationBuilder setLocation(string $param, string $operator, string $value)*
+ * @method LocationBuilder setLocation(string $param, string $operator, string $value)
  */
 class FieldBuilder extends ParentDelegationBuilder implements NamedBuilder
 {
@@ -140,6 +145,22 @@ class FieldBuilder extends ParentDelegationBuilder implements NamedBuilder
 
         return $this->setConfig('key', $key);
     }
+
+    public function setCustomKey($key)
+    {
+        return $this
+            ->setConfig('key', $key)
+            ->setConfig('_has_custom_key', true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCustomKey()
+    {
+        return array_key_exists('_has_custom_key', $this->config) && $this->config['_has_custom_key'];
+    }
+
 
     /**
      * Will set field required.
